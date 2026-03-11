@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV Builder — Estilo Harvard</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23A51C30'/%3E%3Crect x='10' y='10' width='28' height='36' rx='3' fill='white'/%3E%3Crect x='14' y='16' width='20' height='2.5' rx='1' fill='%23A51C30'/%3E%3Crect x='14' y='21' width='16' height='2' rx='1' fill='%23d4a0a8'/%3E%3Crect x='14' y='26' width='18' height='2' rx='1' fill='%23d4a0a8'/%3E%3Crect x='14' y='31' width='14' height='2' rx='1' fill='%23d4a0a8'/%3E%3Crect x='14' y='36' width='16' height='2' rx='1' fill='%23d4a0a8'/%3E%3Ccircle cx='44' cy='40' r='13' fill='%23C9A84C'/%3E%3Ctext x='44' y='45' text-anchor='middle' font-family='serif' font-size='14' font-weight='bold' fill='white'%3E✓%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #A51C30;
+    --accent-dark: #7a1422;
+    --accent-light: #fdf5f6;
+    --gold: #C9A84C;
+    --dark: #1a1a1a;
+    --mid: #444;
+    --light-text: #777;
+    --border: #ddd;
+    --bg: #f7f5f1;
+    --white: #fff;
+    --section-bg: #fafaf8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--bg);
+    color: var(--dark);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .app-header {
+    background: var(--accent);
+    color: white;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,.25);
+    transition: background .4s;
+  }
+  .app-header .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: .5px;
+  }
+  .app-header .sub {
+    font-size: .78rem;
+    opacity: .75;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 1px;
+  }
+  .app-header .divider { width: 1px; height: 36px; background: rgba(255,255,255,.3); margin: 0 8px; }
+  .btn-preview {
+    margin-left: auto;
+    background: var(--gold);
+    color: white;
+    border: none;
+    padding: 9px 22px;
+    border-radius: 4px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: .5px;
+    transition: background .2s, transform .1s;
+  }
+  .btn-preview:hover { background: #b8933e; transform: translateY(-1px); }
+  .btn-download {
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,.5);
+    color: white;
+    padding: 9px 20px;
+    border-radius: 4px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: .9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .2s;
+    margin-left: 10px;
+  }
+  .btn-download:hover { border-color: white; background: rgba(255,255,255,.1); }
+
+  /* ── LAYOUT ── */
+  .app-body {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    min-height: calc(100vh - 64px);
+  }
+
+  /* ── FORM PANEL ── */
+  .form-panel {
+    background: white;
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    max-height: calc(100vh - 64px);
+  }
+
+  .section-tab {
+    border-bottom: 1px solid #eee;
+  }
+  .section-tab summary {
+    padding: 16px 24px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    user-select: none;
+    list-style: none;
+    transition: background .15s;
+  }
+  .section-tab summary::-webkit-details-marker { display: none; }
+  .section-tab summary:hover { background: var(--accent-light); }
+  .section-tab[open] summary { background: var(--accent-light); }
+  .section-tab summary .icon { font-size: 1.2rem; }
+  .section-tab summary .chevron {
+    margin-left: auto;
+    font-size: .75rem;
+    transition: transform .25s;
+    color: var(--light-text);
+  }
+  .section-tab[open] summary .chevron { transform: rotate(180deg); }
+  .section-body { padding: 16px 24px 20px; background: var(--section-bg); }
+
+  label {
+    display: block;
+    font-size: .78rem;
+    font-weight: 600;
+    letter-spacing: .6px;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 5px;
+    margin-top: 12px;
+  }
+  label:first-child { margin-top: 0; }
+  input[type=text], input[type=email], input[type=tel], input[type=url], textarea, select {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 5px;
+    padding: 9px 12px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: .92rem;
+    color: var(--dark);
+    background: white;
+    transition: border-color .2s;
+    outline: none;
+  }
+  input:focus, textarea:focus, select:focus { border-color: var(--accent); }
+  textarea { resize: vertical; min-height: 70px; }
+
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* Photo upload */
+  .photo-upload-area {
+    border: 2px dashed var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+    margin-top: 12px;
+  }
+  .photo-upload-area:hover { border-color: var(--accent); background: var(--accent-light); }
+  .photo-preview {
+    width: 90px;
+    height: 110px;
+    border-radius: 4px;
+    object-fit: cover;
+    margin: 0 auto 8px;
+    display: none;
+    border: 2px solid var(--accent);
+  }
+  .photo-upload-area p { font-size: .82rem; color: var(--light-text); margin-top: 4px; }
+  .photo-upload-area input { display: none; }
+
+  /* Dynamic entries */
+  .entry-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    margin-bottom: 10px;
+    position: relative;
+    animation: slideIn .2s ease;
+  }
+  @keyframes slideIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+  .btn-remove {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #bbb;
+    font-size: 1.1rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: color .15s;
+  }
+  .btn-remove:hover { color: var(--accent); }
+  .btn-add {
+    background: none;
+    border: 1.5px dashed var(--accent);
+    color: var(--accent);
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: .88rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: all .15s;
+    letter-spacing: .3px;
+  }
+  .btn-add:hover { background: var(--accent-light); }
+
+  /* Skills tags */
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 8px; }
+  .skill-tag {
+    background: var(--accent);
+    color: white;
+    padding: 4px 11px 4px 11px;
+    border-radius: 20px;
+    font-size: .8rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    animation: slideIn .15s;
+    transition: background .3s;
+  }
+  .skill-tag span { cursor: pointer; opacity: .7; font-size: .9rem; transition: opacity .15s; }
+  .skill-tag span:hover { opacity: 1; }
+  .skill-input-row { display: flex; gap: 8px; margin-top: 10px; }
+  .skill-input-row input { flex: 1; }
+  .btn-add-skill {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 9px 16px;
+    border-radius: 5px;
+    font-size: .88rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .15s;
+  }
+  .btn-add-skill:hover { background: var(--accent-dark); }
+
+  /* ── COLOR PICKER ── */
+  .color-picker-section {
+    background: var(--accent);
+    padding: 14px 24px;
+    transition: background .4s;
+  }
+  .color-picker-label {
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.8);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .color-swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: transform .15s, border-color .15s;
+    position: relative;
+  }
+  .swatch:hover { transform: scale(1.15); }
+  .swatch.active { border-color: white; transform: scale(1.15); }
+  .swatch-custom-wrap {
+    position: relative;
+    width: 28px;
+    height: 28px;
+  }
+  .swatch-custom {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,.5);
+    cursor: pointer;
+    overflow: hidden;
+    background: conic-gradient(red,yellow,lime,cyan,blue,magenta,red);
+    transition: transform .15s, border-color .15s;
+  }
+  .swatch-custom:hover, .swatch-custom.active { transform: scale(1.15); border-color: white; }
+  .swatch-custom input[type=color] {
+    opacity: 0;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+  }
+
+  /* ── PREVIEW PANEL ── */
+  .preview-panel {
+    overflow-y: auto;
+    max-height: calc(100vh - 64px);
+    background: #e8e6e1;
+    padding: 32px 24px;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* ── CV DOCUMENT ── */
+  .cv-doc {
+    background: white;
+    width: 100%;
+    max-width: 720px;
+    min-height: 960px;
+    padding: 52px 56px 60px;
+    box-shadow: 0 4px 32px rgba(0,0,0,.15);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 10.5pt;
+    color: #1a1a1a;
+    line-height: 1.5;
+  }
+
+  /* CV Header */
+  .cv-header {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    margin-bottom: 22px;
+    padding-bottom: 16px;
+    border-bottom: 2.5px solid var(--accent);
+    transition: border-color .4s;
+  }
+  .cv-photo {
+    width: 92px;
+    height: 112px;
+    object-fit: cover;
+    border-radius: 3px;
+    border: 2px solid #ddd;
+    flex-shrink: 0;
+    display: none;
+  }
+  .cv-name-block { flex: 1; }
+  .cv-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 26pt;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.1;
+    letter-spacing: -.3px;
+    transition: color .4s;
+  }
+  .cv-title {
+    font-size: 11pt;
+    font-weight: 500;
+    color: var(--light-text);
+    margin-top: 3px;
+    letter-spacing: .3px;
+  }
+  .cv-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    margin-top: 9px;
+    font-size: 9pt;
+    color: var(--mid);
+  }
+  .cv-contact span { display: flex; align-items: center; gap: 4px; }
+
+  /* CV Sections */
+  .cv-section { margin-top: 20px; }
+  .cv-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 11.5pt;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 4px;
+    margin-bottom: 11px;
+    transition: color .4s, border-color .4s;
+  }
+
+  .cv-entry { margin-bottom: 13px; }
+  .cv-entry-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .cv-entry-title { font-weight: 600; font-size: 10.5pt; color: var(--dark); }
+  .cv-entry-date { font-size: 9pt; color: var(--light-text); white-space: nowrap; flex-shrink: 0; }
+  .cv-entry-sub { font-size: 9.5pt; color: var(--mid); margin-top: 1px; font-style: italic; }
+  .cv-entry-desc { font-size: 9.5pt; color: var(--mid); margin-top: 4px; white-space: pre-wrap; }
+
+  .cv-skills-list { display: flex; flex-wrap: wrap; gap: 6px 0; }
+  .cv-skill-item {
+    font-size: 9.5pt;
+    color: var(--mid);
+  }
+  .cv-skill-item:not(:last-child)::after { content: " · "; color: var(--accent); padding: 0 4px; transition: color .4s; }
+
+  .cv-summary { font-size: 9.5pt; color: var(--mid); font-style: italic; line-height: 1.6; }
+
+  .cv-placeholder { color: #bbb; font-style: italic; font-size: 9pt; }
+
+  /* References */
+  .cv-ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px; }
+  .cv-ref-item {}
+  .cv-ref-name { font-weight: 600; font-size: 10pt; }
+  .cv-ref-role { font-size: 9pt; color: var(--mid); font-style: italic; }
+  .cv-ref-contact { font-size: 9pt; color: var(--mid); margin-top: 1px; }
+
+  /* ── MODAL PRINT ── */
+  @media print {
+    body { background: white; }
+    .app-header, .form-panel { display: none !important; }
+    .preview-panel { padding: 0; background: white; max-height: none; overflow: visible; }
+    .cv-doc { box-shadow: none; }
+    .app-body { grid-template-columns: 1fr; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .app-body { grid-template-columns: 1fr; }
+    .form-panel { max-height: none; border-right: none; border-bottom: 1px solid var(--border); }
+    .preview-panel { max-height: none; }
+  }
+
+  /* Progress bar */
+  .progress-bar-wrap { background: rgba(255,255,255,.2); border-radius: 10px; height: 5px; width: 120px; margin-left: 12px; }
+  .progress-bar-fill { background: var(--gold); height: 100%; border-radius: 10px; transition: width .4s ease; }
+  .progress-label { font-size: .72rem; color: rgba(255,255,255,.7); margin-left: 6px; white-space: nowrap; }
+
+  .empty-hint {
+    text-align: center;
+    color: #ccc;
+    padding: 20px 0;
+    font-size: .9rem;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div>
+    <div class="logo">CV Builder</div>
+    <div class="sub">Estilo Harvard</div>
+  </div>
+  <div class="divider"></div>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+  <span class="progress-label" id="progressLabel">0% completado</span>
+  <button class="btn-preview" onclick="window.print()">🖨️ Imprimir / PDF</button>
+</header>
+
+<div class="app-body">
+  <!-- ══════════ FORM ══════════ -->
+  <aside class="form-panel">
+
+    <!-- COLOR PICKER -->
+    <div class="color-picker-section" id="colorPickerSection">
+      <div class="color-picker-label">🎨 Color del CV</div>
+      <div class="color-swatches">
+        <div class="swatch active" style="background:#A51C30" data-color="#A51C30" data-dark="#7a1422" data-light="#fdf5f6" title="Harvard Crimson" onclick="setColor(this)"></div>
+        <div class="swatch" style="background:#1a3a5c" data-color="#1a3a5c" data-dark="#102540" data-light="#f0f4f8" title="Azul Marino" onclick="setColor(this)"></div>
+        <div class="swatch" style="background:#1a5c3a" data-color="#1a5c3a" data-dark="#103d26" data-light="#f0f8f4" title="Verde Bosque" onclick="setColor(this)"></div>
+        <div class="swatch" style="background:#4a1a7a" data-color="#4a1a7a" data-dark="#32105a" data-light="#f5f0fc" title="Morado Real" onclick="setColor(this)"></div>
+        <div class="swatch" style="background:#7a4a1a" data-color="#7a4a1a" data-dark="#5a3210" data-light="#fdf6f0" title="Café Ejecutivo" onclick="setColor(this)"></div>
+        <div class="swatch" style="background:#1a5c5c" data-color="#1a5c5c" data-dark="#103d3d" data-light="#f0f8f8" title="Verde Azulado" onclick="setColor(this)"></div>
+        <div class="swatch" style="background:#2d2d2d" data-color="#2d2d2d" data-dark="#111" data-light="#f5f5f5" title="Carbón Elegante" onclick="setColor(this)"></div>
+        <div class="swatch" style="background:#c0392b" data-color="#c0392b" data-dark="#96281b" data-light="#fdf4f4" title="Rojo Clásico" onclick="setColor(this)"></div>
+        <div class="swatch-custom-wrap" title="Color personalizado">
+          <div class="swatch-custom" id="customSwatch">
+            <input type="color" id="customColorInput" value="#A51C30" oninput="setCustomColor(this.value)">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DATOS PERSONALES -->
+    <details class="section-tab" open>
+      <summary><span class="icon">👤</span> Datos Personales <span class="chevron">▼</span></summary>
+      <div class="section-body">
+        <label>Fotografía (opcional)</label>
+        <div class="photo-upload-area" onclick="document.getElementById('photoInput').click()">
+          <img id="photoPreview" class="photo-preview" alt="foto">
+          <div id="photoHint">📷<br><p>Haz clic para subir tu foto<br><small>JPG, PNG · Recomendado 3×4</small></p></div>
+          <input type="file" id="photoInput" accept="image/*" onchange="handlePhoto(event)">
+        </div>
+        <label>Nombre completo *</label>
+        <input type="text" id="f_name" placeholder="Ej. Ana Martínez López" oninput="update()">
+        <label>Título / Carrera</label>
+        <input type="text" id="f_title" placeholder="Ej. Ingeniería en Sistemas Computacionales" oninput="update()">
+        <div class="row-2">
+          <div>
+            <label>Correo electrónico</label>
+            <input type="email" id="f_email" placeholder="correo@email.com" oninput="update()">
+          </div>
+          <div>
+            <label>Teléfono</label>
+            <input type="tel" id="f_phone" placeholder="+52 800 000 0000" oninput="update()">
+          </div>
+        </div>
+        <div class="row-2">
+          <div>
+            <label>Ciudad / Estado</label>
+            <input type="text" id="f_location" placeholder="Monterrey, N.L." oninput="update()">
+          </div>
+          <div>
+            <label>LinkedIn / Portafolio</label>
+            <input type="url" id="f_linkedin" placeholder="linkedin.com/in/usuario" oninput="update()">
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <!-- PERFIL PROFESIONAL -->
+    <details class="section-tab">
+      <summary><span class="icon">✨</span> Perfil Profesional <span class="chevron">▼</span></summary>
+      <div class="section-body">
+        <label>Resumen (2-3 oraciones)</label>
+        <textarea id="f_summary" rows="4" placeholder="Escribe un breve resumen sobre ti, tus objetivos y lo que puedes aportar..." oninput="update()"></textarea>
+      </div>
+    </details>
+
+    <!-- EDUCACIÓN -->
+    <details class="section-tab">
+      <summary><span class="icon">🎓</span> Educación <span class="chevron">▼</span></summary>
+      <div class="section-body">
+        <div id="edu-entries"></div>
+        <button class="btn-add" onclick="addEntry('edu')">+ Agregar educación</button>
+      </div>
+    </details>
+
+    <!-- EXPERIENCIA -->
+    <details class="section-tab">
+      <summary><span class="icon">💼</span> Experiencia <span class="chevron">▼</span></summary>
+      <div class="section-body">
+        <div id="exp-entries"></div>
+        <button class="btn-add" onclick="addEntry('exp')">+ Agregar experiencia</button>
+      </div>
+    </details>
+
+    <!-- PROYECTOS -->
+    <details class="section-tab">
+      <summary><span class="icon">🚀</span> Proyectos <span class="chevron">▼</span></summary>
+      <div class="section-body">
+        <div id="proj-entries"></div>
+        <button class="btn-add" onclick="addEntry('proj')">+ Agregar proyecto</button>
+      </div>
+    </details>
+
+    <!-- HABILIDADES -->
+    <details class="section-tab">
+      <summary><span class="icon">⚡</span> Habilidades <span class="chevron">▼</span></summary>
+      <div class="section-body">
+        <label>Habilidades técnicas</label>
+        <div class="skill-input-row">
+          <input type="text" id="skill-tech-input" placeholder="Ej. JavaScript, Python…" onkeydown="if(event.key==='Enter')addSkill('tech')">
+          <button class="btn-add-skill" onclick="addSkill('tech')">+ Agregar</button>
+        </div>
+        <div class="skill-tags" id="skill-tech-tags"></div>
+
+        <label style="margin-top:18px">Habilidades blandas</label>
+        <div class="skill-input-row">
+          <input type="text" id="skill-soft-input" placeholder="Ej. Liderazgo, Trabajo en equipo…" onkeydown="if(event.key==='Enter')addSkill('soft')">
+          <button class="btn-add-skill" onclick="addSkill('soft')">+ Agregar</button>
+        </div>
+        <div class="skill-tags" id="skill-soft-tags"></div>
+
+        <label style="margin-top:18px">Idiomas</label>
+        <div class="skill-input-row">
+          <input type="text" id="skill-lang-input" placeholder="Ej. Inglés B2, Francés A1…" onkeydown="if(event.key==='Enter')addSkill('lang')">
+          <button class="btn-add-skill" onclick="addSkill('lang')">+ Agregar</button>
+        </div>
+        <div class="skill-tags" id="skill-lang-tags"></div>
+      </div>
+    </details>
+
+    <!-- CERTIFICACIONES -->
+    <details class="section-tab">
+      <summary><span class="icon">🏅</span> Certificaciones <span class="chevron">▼</span></summary>
+      <div class="section-body">
+        <div id="cert-entries"></div>
+        <button class="btn-add" onclick="addEntry('cert')">+ Agregar certificación</button>
+      </div>
+    </details>
+
+    <!-- VOLUNTARIADO / ACTIVIDADES -->
+    <details class="section-tab">
+      <summary><span class="icon">🤝</span> Voluntariado / Actividades <span class="chevron">▼</span></summary>
+      <div class="section-body">
+        <div id="vol-entries"></div>
+        <button class="btn-add" onclick="addEntry('vol')">+ Agregar actividad</button>
+      </div>
+    </details>
+
+    <!-- REFERENCIAS -->
+    <details class="section-tab">
+      <summary><span class="icon">📋</span> Referencias <span class="chevron">▼</span></summary>
+      <div class="section-body">
+        <p style="font-size:.82rem;color:var(--light-text);margin-bottom:12px;line-height:1.5">Incluye 2–3 personas que puedan hablar bien de ti: profesores, jefes de prácticas, supervisores de voluntariado, etc.</p>
+        <div id="ref-entries"></div>
+        <button class="btn-add" onclick="addEntry('ref')">+ Agregar referencia</button>
+      </div>
+    </details>
+
+  </aside>
+
+  <!-- ══════════ PREVIEW ══════════ -->
+  <main class="preview-panel">
+    <div class="cv-doc" id="cvDoc">
+
+      <!-- HEADER -->
+      <div class="cv-header">
+        <img id="cv_photo" class="cv-photo" alt="foto de perfil">
+        <div class="cv-name-block">
+          <div class="cv-name" id="cv_name"><span class="cv-placeholder">Tu Nombre Completo</span></div>
+          <div class="cv-title" id="cv_title"></div>
+          <div class="cv-contact" id="cv_contact"></div>
+        </div>
+      </div>
+
+      <!-- PERFIL -->
+      <div id="cv_summary_block" class="cv-section" style="display:none">
+        <div class="cv-section-title">Perfil Profesional</div>
+        <p class="cv-summary" id="cv_summary"></p>
+      </div>
+
+      <!-- EDUCACIÓN -->
+      <div id="cv_edu_block" class="cv-section" style="display:none">
+        <div class="cv-section-title">Educación</div>
+        <div id="cv_edu_list"></div>
+      </div>
+
+      <!-- EXPERIENCIA -->
+      <div id="cv_exp_block" class="cv-section" style="display:none">
+        <div class="cv-section-title">Experiencia Profesional</div>
+        <div id="cv_exp_list"></div>
+      </div>
+
+      <!-- PROYECTOS -->
+      <div id="cv_proj_block" class="cv-section" style="display:none">
+        <div class="cv-section-title">Proyectos</div>
+        <div id="cv_proj_list"></div>
+      </div>
+
+      <!-- HABILIDADES -->
+      <div id="cv_skills_block" class="cv-section" style="display:none">
+        <div class="cv-section-title">Habilidades</div>
+        <div id="cv_skills_content"></div>
+      </div>
+
+      <!-- CERTIFICACIONES -->
+      <div id="cv_cert_block" class="cv-section" style="display:none">
+        <div class="cv-section-title">Certificaciones</div>
+        <div id="cv_cert_list"></div>
+      </div>
+
+      <!-- VOLUNTARIADO -->
+      <div id="cv_vol_block" class="cv-section" style="display:none">
+        <div class="cv-section-title">Voluntariado y Actividades</div>
+        <div id="cv_vol_list"></div>
+      </div>
+
+      <!-- REFERENCIAS -->
+      <div id="cv_ref_block" class="cv-section" style="display:none">
+        <div class="cv-section-title">Referencias</div>
+        <div id="cv_ref_list" class="cv-ref-grid"></div>
+      </div>
+
+      <div id="cv_empty_msg" class="empty-hint" style="margin-top:60px">
+        👈 Completa el formulario para ver tu CV aquí en tiempo real
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+// ── State ──
+const state = {
+  photo: null,
+  skills: { tech: [], soft: [], lang: [] },
+  entries: { edu: [], exp: [], proj: [], cert: [], vol: [], ref: [] }
+};
+let entryCounters = { edu: 0, exp: 0, proj: 0, cert: 0, vol: 0, ref: 0 };
+
+// ── Entry configs ──
+const entryConfig = {
+  edu: [
+    { id:'institution', label:'Institución', placeholder:'Ej. UNAM, Tec de Monterrey' },
+    { id:'degree', label:'Título / Carrera', placeholder:'Ej. Ingeniería Industrial' },
+    { id:'dates', label:'Período', placeholder:'Ej. 2020 – 2024', half:true },
+    { id:'gpa', label:'Promedio (opcional)', placeholder:'Ej. 9.2', half:true },
+    { id:'desc', label:'Logros / Actividades (opcional)', placeholder:'Menciona proyectos destacados, reconocimientos…', textarea:true },
+  ],
+  exp: [
+    { id:'company', label:'Empresa / Organización', placeholder:'Ej. Google México' },
+    { id:'role', label:'Puesto / Rol', placeholder:'Ej. Desarrollador Jr.' },
+    { id:'dates', label:'Período', placeholder:'Ej. Ene 2023 – Ago 2023', half:true },
+    { id:'location', label:'Ciudad', placeholder:'Ej. CDMX (remoto)', half:true },
+    { id:'desc', label:'Responsabilidades y logros', placeholder:'• Describir logros con verbos de acción y métricas…', textarea:true },
+  ],
+  proj: [
+    { id:'name', label:'Nombre del proyecto', placeholder:'Ej. App de gestión de tareas' },
+    { id:'tech', label:'Tecnologías / Herramientas', placeholder:'Ej. React, Node.js, Firebase' },
+    { id:'dates', label:'Fecha', placeholder:'Ej. 2023', half:true },
+    { id:'link', label:'Enlace (opcional)', placeholder:'github.com/usuario/proyecto', half:true },
+    { id:'desc', label:'Descripción', placeholder:'¿Qué resolviste? ¿Cuál fue el impacto?', textarea:true },
+  ],
+  cert: [
+    { id:'name', label:'Nombre de la certificación', placeholder:'Ej. AWS Cloud Practitioner' },
+    { id:'issuer', label:'Institución emisora', placeholder:'Ej. Amazon Web Services', half:true },
+    { id:'dates', label:'Fecha', placeholder:'Ej. Jun 2023', half:true },
+  ],
+  vol: [
+    { id:'org', label:'Organización', placeholder:'Ej. Cruz Roja Mexicana' },
+    { id:'role', label:'Rol', placeholder:'Ej. Voluntario de Primeros Auxilios' },
+    { id:'dates', label:'Período', placeholder:'Ej. 2022 – Presente', half:true },
+    { id:'location', label:'Ciudad', placeholder:'', half:true },
+    { id:'desc', label:'Descripción (opcional)', placeholder:'', textarea:true },
+  ],
+  ref: [
+    { id:'name', label:'Nombre completo', placeholder:'Ej. Dr. Carlos Ramírez' },
+    { id:'role', label:'Cargo / Relación', placeholder:'Ej. Profesor titular de Cálculo', half:true },
+    { id:'org', label:'Institución', placeholder:'Ej. ITESM Campus MTY', half:true },
+    { id:'email', label:'Correo electrónico', placeholder:'c.ramirez@itesm.mx', half:true },
+    { id:'phone', label:'Teléfono (opcional)', placeholder:'+52 800 000 0000', half:true },
+  ]
+};
+
+// ── Color Theme ──
+function setColor(swatchEl) {
+  document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+  document.getElementById('customSwatch').classList.remove('active');
+  swatchEl.classList.add('active');
+  applyColor(swatchEl.dataset.color, swatchEl.dataset.dark, swatchEl.dataset.light);
+}
+
+function setCustomColor(hex) {
+  document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+  document.getElementById('customSwatch').classList.add('active');
+  // derive dark/light automatically
+  const dark = shadeColor(hex, -20);
+  const light = hex + '18'; // very transparent for light bg
+  applyColor(hex, dark, '#f8f8f8');
+}
+
+function shadeColor(hex, pct) {
+  const num = parseInt(hex.replace('#',''), 16);
+  const r = Math.min(255, Math.max(0, (num>>16) + pct));
+  const g = Math.min(255, Math.max(0, ((num>>8)&0xff) + pct));
+  const b = Math.min(255, Math.max(0, (num&0xff) + pct));
+  return '#' + [r,g,b].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+
+function applyColor(color, dark, light) {
+  const root = document.documentElement;
+  root.style.setProperty('--accent', color);
+  root.style.setProperty('--accent-dark', dark);
+  root.style.setProperty('--accent-light', light);
+  document.getElementById('colorPickerSection').style.background = color;
+}
+
+// ── Add / Remove entries ──
+function addEntry(type) {
+  const id = ++entryCounters[type];
+  const entry = { _id: id };
+  entryConfig[type].forEach(f => entry[f.id] = '');
+  state.entries[type].push(entry);
+  renderEntryForm(type, entry);
+  update();
+}
+
+function renderEntryForm(type, entry) {
+  const container = document.getElementById(`${type}-entries`);
+  const card = document.createElement('div');
+  card.className = 'entry-card';
+  card.id = `card-${type}-${entry._id}`;
+
+  let fields = '';
+  const cfg = entryConfig[type];
+  for (let i = 0; i < cfg.length; i++) {
+    const f = cfg[i];
+    const nextF = cfg[i+1];
+    if (f.half && nextF && nextF.half) {
+      fields += `<div class="row-2">`;
+      fields += buildField(type, entry._id, f);
+      fields += buildField(type, entry._id, nextF);
+      fields += `</div>`;
+      i++;
+    } else if (f.textarea) {
+      fields += `<div>`;
+      fields += buildField(type, entry._id, f);
+      fields += `</div>`;
+    } else {
+      fields += buildField(type, entry._id, f);
+    }
+  }
+
+  card.innerHTML = `
+    <button class="btn-remove" onclick="removeEntry('${type}', ${entry._id})" title="Eliminar">✕</button>
+    ${fields}
+  `;
+  container.appendChild(card);
+}
+
+function buildField(type, id, f) {
+  if (f.textarea) {
+    return `<div><label>${f.label}</label><textarea placeholder="${f.placeholder}" oninput="updateEntry('${type}',${id},'${f.id}',this.value)"></textarea></div>`;
+  }
+  return `<div><label>${f.label}</label><input type="text" placeholder="${f.placeholder}" oninput="updateEntry('${type}',${id},'${f.id}',this.value)"></div>`;
+}
+
+function updateEntry(type, id, field, val) {
+  const e = state.entries[type].find(x => x._id === id);
+  if (e) { e[field] = val; update(); }
+}
+
+function removeEntry(type, id) {
+  state.entries[type] = state.entries[type].filter(x => x._id !== id);
+  document.getElementById(`card-${type}-${id}`)?.remove();
+  update();
+}
+
+// ── Skills ──
+function addSkill(cat) {
+  const input = document.getElementById(`skill-${cat}-input`);
+  const val = input.value.trim();
+  if (!val || state.skills[cat].includes(val)) { input.value=''; return; }
+  state.skills[cat].push(val);
+  input.value = '';
+  renderSkillTag(cat, val);
+  update();
+}
+
+function renderSkillTag(cat, val) {
+  const container = document.getElementById(`skill-${cat}-tags`);
+  const tag = document.createElement('div');
+  tag.className = 'skill-tag';
+  tag.dataset.val = val;
+  tag.innerHTML = `${val} <span onclick="removeSkill('${cat}','${val}',this.parentElement)">✕</span>`;
+  container.appendChild(tag);
+}
+
+function removeSkill(cat, val, el) {
+  state.skills[cat] = state.skills[cat].filter(x => x !== val);
+  el.remove();
+  update();
+}
+
+// ── Photo ──
+function handlePhoto(evt) {
+  const file = evt.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    state.photo = e.target.result;
+    document.getElementById('photoPreview').src = e.target.result;
+    document.getElementById('photoPreview').style.display = 'block';
+    document.getElementById('photoHint').style.display = 'none';
+    update();
+  };
+  reader.readAsDataURL(file);
+}
+
+// ── Helpers ──
+function esc(s) {
+  if (!s) return '';
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function buildEntryHTML(entries, type) {
+  if (!entries.length) return '';
+  return entries.map(e => {
+    let title='', sub='', date='', desc='';
+    if(type==='edu') { title=e.institution; sub=e.degree+(e.gpa?` · Promedio: ${e.gpa}`:''); date=e.dates; desc=e.desc; }
+    if(type==='exp') { title=e.role; sub=e.company+(e.location?`, ${e.location}`:''); date=e.dates; desc=e.desc; }
+    if(type==='proj') { title=e.name; sub=(e.tech?e.tech:'')+(e.link?` · ${e.link}`:''); date=e.dates; desc=e.desc; }
+    if(type==='cert') { title=e.name; sub=e.issuer; date=e.dates; }
+    if(type==='vol') { title=e.role; sub=e.org+(e.location?`, ${e.location}`:''); date=e.dates; desc=e.desc; }
+    return `
+      <div class="cv-entry">
+        <div class="cv-entry-head">
+          <span class="cv-entry-title">${esc(title)||'—'}</span>
+          ${date?`<span class="cv-entry-date">${esc(date)}</span>`:''}
+        </div>
+        ${sub?`<div class="cv-entry-sub">${esc(sub)}</div>`:''}
+        ${desc?`<div class="cv-entry-desc">${esc(desc)}</div>`:''}
+      </div>`;
+  }).join('');
+}
+
+// ── Main update ──
+function update() {
+  const name = document.getElementById('f_name').value.trim();
+  const title = document.getElementById('f_title').value.trim();
+  const email = document.getElementById('f_email').value.trim();
+  const phone = document.getElementById('f_phone').value.trim();
+  const location = document.getElementById('f_location').value.trim();
+  const linkedin = document.getElementById('f_linkedin').value.trim();
+  const summary = document.getElementById('f_summary').value.trim();
+
+  // Name
+  document.getElementById('cv_name').innerHTML = name
+    ? `<span style="font-family:'Playfair Display',serif">${esc(name)}</span>`
+    : `<span class="cv-placeholder">Tu Nombre Completo</span>`;
+  document.getElementById('cv_title').textContent = title;
+
+  // Contact
+  let contact = '';
+  if (email) contact += `<span>✉ ${esc(email)}</span>`;
+  if (phone) contact += `<span>📞 ${esc(phone)}</span>`;
+  if (location) contact += `<span>📍 ${esc(location)}</span>`;
+  if (linkedin) contact += `<span>🔗 ${esc(linkedin)}</span>`;
+  document.getElementById('cv_contact').innerHTML = contact;
+
+  // Photo
+  if (state.photo) {
+    const cvPhoto = document.getElementById('cv_photo');
+    cvPhoto.src = state.photo;
+    cvPhoto.style.display = 'block';
+  }
+
+  // Summary
+  const summaryBlock = document.getElementById('cv_summary_block');
+  if (summary) {
+    summaryBlock.style.display = 'block';
+    document.getElementById('cv_summary').textContent = summary;
+  } else {
+    summaryBlock.style.display = 'none';
+  }
+
+  // Sections
+  const sections = ['edu','exp','proj','cert','vol'];
+  sections.forEach(type => {
+    const block = document.getElementById(`cv_${type}_block`);
+    const list = document.getElementById(`cv_${type}_list`);
+    if (state.entries[type].length) {
+      block.style.display = 'block';
+      list.innerHTML = buildEntryHTML(state.entries[type], type);
+    } else {
+      block.style.display = 'none';
+    }
+  });
+
+  // References
+  const refBlock = document.getElementById('cv_ref_block');
+  const refList = document.getElementById('cv_ref_list');
+  if (state.entries.ref.length) {
+    refBlock.style.display = 'block';
+    refList.innerHTML = state.entries.ref.map(e => `
+      <div class="cv-ref-item">
+        <div class="cv-ref-name">${esc(e.name)||'—'}</div>
+        <div class="cv-ref-role">${[esc(e.role), esc(e.org)].filter(Boolean).join(' · ')}</div>
+        ${e.email ? `<div class="cv-ref-contact">✉ ${esc(e.email)}</div>` : ''}
+        ${e.phone ? `<div class="cv-ref-contact">📞 ${esc(e.phone)}</div>` : ''}
+      </div>`).join('');
+  } else {
+    refBlock.style.display = 'none';
+  }
+
+  // Skills
+  const allSkills = [...state.skills.tech, ...state.skills.soft, ...state.skills.lang];
+  const skillsBlock = document.getElementById('cv_skills_block');
+  if (allSkills.length) {
+    skillsBlock.style.display = 'block';
+    let html = '';
+    if (state.skills.tech.length) {
+      html += `<div class="cv-entry" style="margin-bottom:8px"><div class="cv-entry-head"><span class="cv-entry-title">Técnicas</span></div><div class="cv-skills-list">`;
+      html += state.skills.tech.map(s=>`<span class="cv-skill-item">${esc(s)}</span>`).join('');
+      html += `</div></div>`;
+    }
+    if (state.skills.soft.length) {
+      html += `<div class="cv-entry" style="margin-bottom:8px"><div class="cv-entry-head"><span class="cv-entry-title">Blandas</span></div><div class="cv-skills-list">`;
+      html += state.skills.soft.map(s=>`<span class="cv-skill-item">${esc(s)}</span>`).join('');
+      html += `</div></div>`;
+    }
+    if (state.skills.lang.length) {
+      html += `<div class="cv-entry"><div class="cv-entry-head"><span class="cv-entry-title">Idiomas</span></div><div class="cv-skills-list">`;
+      html += state.skills.lang.map(s=>`<span class="cv-skill-item">${esc(s)}</span>`).join('');
+      html += `</div></div>`;
+    }
+    document.getElementById('cv_skills_content').innerHTML = html;
+  } else {
+    skillsBlock.style.display = 'none';
+  }
+
+  // Empty message
+  const hasContent = name || summary || allSkills.length ||
+    sections.some(t => state.entries[t].length) || state.entries.ref.length;
+  document.getElementById('cv_empty_msg').style.display = hasContent ? 'none' : 'block';
+
+  // Progress
+  const fields = [name, title, email, phone, location, summary];
+  const filled = fields.filter(Boolean).length;
+  const allEntryTypes = [...sections, 'ref'];
+  const entryScore = allEntryTypes.reduce((a,t)=>a+(state.entries[t].length>0?1:0),0);
+  const skillScore = allSkills.length > 0 ? 1 : 0;
+  const total = fields.length + allEntryTypes.length + 1;
+  const pct = Math.round(((filled + entryScore + skillScore) / total) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = pct + '% completado';
+}
+
+// ── Init with example entries ──
+window.onload = () => {
+  // Agregar una entrada de educación vacía para guiar al usuario
+  addEntry('edu');
+  update();
+};
+</script>
+</body>
+</html>
